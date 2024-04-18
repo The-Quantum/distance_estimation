@@ -50,7 +50,7 @@ def takePhotos():
     
         if cv2.waitKey(1) == ord('s'):
             #take multiple photos for calibration
-            name = 'screenshot2__'+str(i)+'.jpg'
+            name = 'screenshot3_'+str(i)+'.jpg'
             cv2.imwrite(name,frame)
            
             print('Image taken')
