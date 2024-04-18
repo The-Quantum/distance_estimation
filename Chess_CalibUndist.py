@@ -25,6 +25,8 @@ def calibration_Chess(dirPath, squareSize, width, height):
     objp[:,:2] = np.mgrid[0:width,0:height].T.reshape(-1,2)
     objp = objp * squareSize;
     
+    print('objp = ', objp)
+    
     # Arrays to store object points and image points from all the images.
     objpoints = [] # 3d point in real world space
     imgpoints = [] # 2d points in image plane.
@@ -76,7 +78,7 @@ def UndistortImage(imgToUndist,calibMtx,distCoef):
  
 
 def UndistortAllImages(dirPath,calibMtx,distCoef):
-    os.chdir('C:\\Users\\jpila\\OneDrive\\Escritorio\\Jean Pierre\\Documentos\\Trabajos\\Stage BESTTIC\\Images to undistort again')
+    os.chdir('C:\\Users\\jpila\\OneDrive\\Documents\\GitHub\\distance_estimation\\Undistorted_ScrShts')
     nameOfFile = 'Undistorted0'
     index=0
     

@@ -8,22 +8,25 @@ Created on Mon Apr 15 16:32:23 2024
 
 import Chess_CalibUndist as Zhang
 import ip_camera as TakePhotos
-import Distance
+import Scale_stimation_Homography as Homography
+import Estimates as Est
 import numpy as np
 import cv2 as cv
 
 
-##TakePhotos.takePhotos()
+#TakePhotos.takePhotos()
 
 #Parameters for Zhang method
 dirPath = 'C:\\Users\\jpila\\OneDrive\\Documents\\GitHub\\distance_estimation\\Screenshots'
 squareSize = 1.5 #in cm
-chBoardWidth  = 11
-chBoardHeight = 11
+nbSquareX  = 11
+nbSquareY = 11
+
+'''
 
 #Calibration
 ret, TransformMtx, distCoef, rVecs, tVecs = Zhang.calibration_Chess(
-     dirPath, squareSize, chBoardWidth, chBoardHeight
+     dirPath, squareSize, nbSquareX, nbSquareY
      )
 
 
@@ -49,58 +52,92 @@ InvMtx = np.linalg.inv(TransformMtx)
 
 TakePhotos.ImagesCompare(TransformMtx, distCoef) 
 
+'''
+
 ########Scale Factor With Distorted Image
+    #The studied Object is going to be notebook
 print("Scale factor with Distorted Image")
 
-pixDistH = Distance.getDistance2Pixels(np.array([422, 433]) , np.array([851, 438]))
-pixDistW = Distance.getDistance2Pixels(np.array([422, 433]) , np.array([400, 715]))
-#Calculate Scale Factor
+pixDistY = Est.estimateDistance2Pixels(np.array([422, 433]) , np.array([851, 438]))
+pixDistX = Est.estimateDistance2Pixels(np.array([422, 433]) , np.array([400, 715]))
 
-    #height (real world height 21cm)
-scaleFactorH = pixDistH/21
-    #Width  (real world width 13.3 cm)
-scaleFactorW = pixDistW/13.3
+###Calculate Scale Factor
 
-print('Scale Factor height = ', scaleFactorH)
-print('Scale Factor width = ', scaleFactorW)
+#Width  (real world width 13.3 cm) height (real world height 21cm)
+scaleFactorX, scaleFactorY = Est.estimateScaleFactor(pixDistX, pixDistY, 13.3 , 21)
+print('Scale Factor height = ', scaleFactorY)
+print('Scale Factor width = ', scaleFactorX)
 print('')
-
 
 
 ########Scale Factor With Undistorted Image
+    #The studied Object is going to be notebook
 print('')
 print("Scale factor with UnDistorted Image")
 
-
-pixDistH = Distance.getDistance2Pixels(np.array([418, 422]) , np.array([849, 435]))
-pixDistW = Distance.getDistance2Pixels(np.array([418, 422]) , np.array([395, 709]))
+pixDistY = Est.estimateDistance2Pixels(np.array([418, 422]) , np.array([849, 435]))
+pixDistX = Est.estimateDistance2Pixels(np.array([418, 422]) , np.array([395, 709]))
+print('Pixel height distance = ' , pixDistY)
+print('Pixel Width distance =', pixDistX)
 
 #Calculate Scale Factor
-
-    #height (real world height 21cm)
-scaleFactorH = pixDistH/21
-    #Width  (real world width 13.3 cm)
-scaleFactorW = pixDistW/13.3
-print('Pixel height distance = ' , pixDistH)
-print('Pixel Width distance =', pixDistW)
-print('Scale Factor height = ', scaleFactorH)
-print('Scale Factor width = ', scaleFactorW)
+#Width  (real world width 13.3 cm) height (real world height 21cm)
+scaleFactorX, scaleFactorY = Est.estimateScaleFactor(pixDistX, pixDistY, 13.3 , 21)
+print('Scale Factor height = ', scaleFactorY)
+print('Scale Factor width = ', scaleFactorX)
 print(''); print('')
 
 
-#Calculate dimension of unknown object
-print('Calculate dimension of unknown object')
-pixDistH = Distance.getDistance2Pixels(np.array([470, 299]) , np.array([1057, 283]))
-pixDistW = Distance.getDistance2Pixels(np.array([470, 299]) , np.array([457, 767]))
+#####Calculate dimension of unknown object
+    #The studied Object is going to the Chess board
+print('Calculate dimension of unknown object (Case being a Chess board)')
 
-realH = pixDistH / scaleFactorH
-realW = pixDistW / scaleFactorW
+pixDistY = Est.estimateDistance2Pixels(np.array([470, 299]) , np.array([1057, 283]))
+pixDistX = Est.estimateDistance2Pixels(np.array([470, 299]) , np.array([457, 767]))
+print('Pixel height distance = ' , pixDistY)
+print('Pixel Width distance =', pixDistX)
 
-print('Pixel height distance = ' , pixDistH)
-print('Pixel Width distance =', pixDistW)
+realW, realH = Est.estimateRealMeasures(pixDistX, pixDistY, scaleFactorX, scaleFactorY)
+
 print('')
-print('Real world height = ' , realH)
-print('Real world Width =', realW)
+print('Real world height ~= ' , realH,'cm')
+print('Real world Width ~=', realW,'cm')
+print('');print('')
+
+
+
+#Use of homography for same purpose
+
+Homography.calibration_Homography(dirPath, squareSize, nbSquareX, nbSquareY)
+
+
+#####Calculate dimension of unknown object with IRL Homography exemple
+    #The studied Object is going to be a pen
+print('Calculate dimension of unknown object (Case being a pen)')
+
+#table coordinates
+pixDistY = Est.estimateDistance2Pixels(np.array([73, 0]) , np.array([73, 118]))
+pixDistX = Est.estimateDistance2Pixels(np.array([73, 0]) , np.array([0, 1]))
+
+print('Table Pixel height distance = ' , pixDistY)
+print('Table Pixel Width distance =', pixDistX)
+
+scaleFactorX, scaleFactorY = Est.estimateScaleFactor(pixDistX, pixDistY, 73.6, 117.4)
+print('Scale Factor height = ', scaleFactorY)
+print('Scale Factor width = ', scaleFactorX)
+print(''); print('')
+
+#pen coordinates
+
+pixDistY = Est.estimateDistance2Pixels(np.array([64, 98]) , np.array([55, 108]))
+pixDistX = Est.estimateDistance2Pixels(np.array([59, 101]) , np.array([61, 104]))
+
+realW, realH = Est.estimateRealMeasures(pixDistX, pixDistY, scaleFactorX, scaleFactorY)
+
+print('')
+print('Real world  pen height ~= ' , realH,'cm')
+print('Real world  pen Width ~=', realW,'cm')
+print('');print('')
 
 
 
