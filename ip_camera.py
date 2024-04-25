@@ -28,10 +28,13 @@ with open(path.join(config_file), "r+") as f:
 def takePhotos():
     
     
-    cap = cv2.VideoCapture(
-        "rtsp://"+cam_access_info['login']+":"\
-            +cam_access_info["pasword"]+"@"+cam_access_info['ip']
-            )
+    # cap = cv2.VideoCapture(
+    #     "rtsp://"+cam_access_info['login']+":"\
+    #         +cam_access_info["pasword"]+"@"+cam_access_info['ip']
+    #         )
+      
+    cap = cv2.VideoCapture(0)
+    show = False
     i = 0;    
         
     while True:
@@ -41,36 +44,34 @@ def takePhotos():
             print("========================= Video not read =========================")
             break
         
-        scale_percent = 50 # percent of original size
-        newWidth = int(frame.shape[1] * scale_percent / 100)
-        newHeight = int(frame.shape[0] * scale_percent / 100)
-        frame = cv2.resize(frame, (newWidth,newHeight))
-        
+        if show:
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            ret, corners = cv2.findChessboardCorners(gray, (7,7), None)
+            
+            cv2.drawChessboardCorners(frame, (7,7), corners, ret)
+            
+            
         cv2.imshow("frame", frame)
     
-        if cv2.waitKey(1) == ord('s'):
+        if cv2.waitKey(1) == ord('p'):
             #take multiple photos for calibration
-            name = 'screenshot3_'+str(i)+'.jpg'
+            name = 'measure'+str(i)+'.jpg'
             cv2.imwrite(name,frame)
            
             print('Image taken')
             i += 1
             print('Number of images =',i)
             
-            if i > 13 :
-                cap.release()
-                cv2.destroyAllWindows()
-                break
              
         if cv2.waitKey(1) == ord('a'):
             #take a singlePhoto
-            name = 'UndistTest.jpg'
-            cv2.imwrite(name,frame)
-           
-            cap.release()
-            cv2.destroyAllWindows()
-            break
-             
+            print('show true')
+            show = True
+            
+        if cv2.waitKey(1) == ord('d'):
+            #take a singlePhoto
+            print('show false')
+            show = False
              
              
     

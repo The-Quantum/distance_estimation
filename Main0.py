@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
+"""q
 Created on Mon Apr 15 16:32:23 2024
 
 @aauthor: jpila
@@ -14,24 +14,20 @@ import numpy as np
 import cv2 as cv
 
 
-#TakePhotos.takePhotos()
-
-#Parameters for Zhang method
-dirPath = 'C:\\Users\\jpila\\OneDrive\\Documents\\GitHub\\distance_estimation\\Screenshots'
-squareSize = 1.5 #in cm
-nbSquareX  = 11
-nbSquareY = 11
-
-'''
-
-#Calibration
-ret, TransformMtx, distCoef, rVecs, tVecs = Zhang.calibration_Chess(
-     dirPath, squareSize, nbSquareX, nbSquareY
-     )
 
 
-#Matrix inversion
-InvMtx = np.linalg.inv(TransformMtx)
+# #Parameters for Zhang method
+# dirPath = 'C:\\Users\\jpila\\OneDrive\\Documents\\GitHub\\distance_estimation\\Screenshots'
+# squareSize = 1 #in cm
+# nbSquareX  = 11
+# nbSquareY = 11
+
+
+
+# #Calibration
+# ret, TransformMtx, distCoef, rVecs, tVecs = Zhang.calibration_Chess(
+#      dirPath, squareSize, nbSquareX, nbSquareY
+#      )
 
 
 # #test Undistort
@@ -43,14 +39,13 @@ InvMtx = np.linalg.inv(TransformMtx)
 # scale_percent = 50 # percent of original size
 # newWidth = int(imgTest.shape[1] * scale_percent / 100)
 # newHeight = int(imgTest.shape[0] * scale_percent / 100)
-
 # toShow = cv.resize(imgTest, (newWidth,newHeight))
 
 # cv.imshow('Comparation', toShow)
 # cv.waitKey(0)
 # cv.destroyAllWindows()
 
-TakePhotos.ImagesCompare(TransformMtx, distCoef) 
+#TakePhotos.ImagesCompare(TransformMtx, distCoef) 
 
 '''
 
@@ -70,19 +65,20 @@ print('Scale Factor width = ', scaleFactorX)
 print('')
 
 
+
 ########Scale Factor With Undistorted Image
     #The studied Object is going to be notebook
 print('')
 print("Scale factor with UnDistorted Image")
 
-pixDistY = Est.estimateDistance2Pixels(np.array([418, 422]) , np.array([849, 435]))
-pixDistX = Est.estimateDistance2Pixels(np.array([418, 422]) , np.array([395, 709]))
+pixDistY = Est.estimateDistance2Pixels(np.array([405,46]) , np.array([605,377]))
+pixDistX = Est.estimateDistance2Pixels(np.array([405,46]) , np.array([156,447]))
 print('Pixel height distance = ' , pixDistY)
 print('Pixel Width distance =', pixDistX)
 
 #Calculate Scale Factor
 #Width  (real world width 13.3 cm) height (real world height 21cm)
-scaleFactorX, scaleFactorY = Est.estimateScaleFactor(pixDistX, pixDistY, 13.3 , 21)
+scaleFactorX, scaleFactorY = Est.estimateScaleFactor(pixDistX, pixDistY, 73.6, 117.4)
 print('Scale Factor height = ', scaleFactorY)
 print('Scale Factor width = ', scaleFactorX)
 print(''); print('')
@@ -92,8 +88,8 @@ print(''); print('')
     #The studied Object is going to the Chess board
 print('Calculate dimension of unknown object (Case being a Chess board)')
 
-pixDistY = Est.estimateDistance2Pixels(np.array([470, 299]) , np.array([1057, 283]))
-pixDistX = Est.estimateDistance2Pixels(np.array([470, 299]) , np.array([457, 767]))
+pixDistY = Est.estimateDistance2Pixels(np.array([561,411]) , np.array([139,473]))
+pixDistX = Est.estimateDistance2Pixels(np.array([561,411]) , np.array([467,226]))
 print('Pixel height distance = ' , pixDistY)
 print('Pixel Width distance =', pixDistX)
 
@@ -103,7 +99,6 @@ print('')
 print('Real world height ~= ' , realH,'cm')
 print('Real world Width ~=', realW,'cm')
 print('');print('')
-
 
 
 #Use of homography for same purpose
@@ -194,7 +189,7 @@ print('Real world tissue height ~= ' , realH,'cm')
 print('Real world tissue Width ~=', realW,'cm')
 print('');print('')
 
-
+'''
 
 
 

@@ -25,7 +25,7 @@ def calibration_Chess(dirPath, squareSize, width, height):
     objp[:,:2] = np.mgrid[0:width,0:height].T.reshape(-1,2)
     objp = objp * squareSize;
     
-    print('objp = ', objp)
+    #print('objp = ', objp)
     
     # Arrays to store object points and image points from all the images.
     objpoints = [] # 3d point in real world space
@@ -58,6 +58,12 @@ def calibration_Chess(dirPath, squareSize, width, height):
         i+=1
      
     cv.destroyAllWindows()
+    
+    print('Objpoints:')
+    print(objpoints)
+    print('')
+    print('ImgPoints')
+    #print(imgpoints)
     
         
     #Camera calibration
