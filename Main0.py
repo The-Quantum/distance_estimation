@@ -6,15 +6,15 @@ Created on Mon Apr 15 16:32:23 2024
 """
 
 
-import Chess_CalibUndist as Zhang
+# import Chess_CalibUndist as Zhang
 import ip_camera as TakePhotos
-import Scale_stimation_Homography as Homography
-import Estimates as Est
+# import Scale_stimation_Homography as Homography
+# qimport Estimates as Est
 import numpy as np
 import cv2 as cv
 
 
-
+TakePhotos.takePhotos()
 
 # #Parameters for Zhang method
 # dirPath = 'C:\\Users\\jpila\\OneDrive\\Documents\\GitHub\\distance_estimation\\Screenshots'

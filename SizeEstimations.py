@@ -36,6 +36,28 @@ class SizeEstimations:
         
         return imgTransform
     
+    
+    def transformCoordSyst(self,objP,tMtx):
+        
+        #create new dimentions
+        add3D = np.zeros(shape=(objP.shape[0], 1))
+        add4D = np.ones(shape=(objP.shape[0], 1))
+
+        to_add = np.concatenate((add3D, add4D), axis=1)
+
+        #add new dimensions
+        objP = np.concatenate((objP, to_add), axis=1)
+
+
+        for i in range (objP.shape[0]):
+            objP[i] = np.dot(tMtx, objP[i])
+            
+        
+        Results = objP[:,:2] 
+        
+        return Results
+
+    
     def estimateDistance2Pixels(self,Pixel1,Pixel2):
     
         toTest = np.float32([])

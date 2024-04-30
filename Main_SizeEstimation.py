@@ -4,12 +4,10 @@ Created on Thu Apr 25 14:55:36 2024
 
 @author: jpila
 """
-
-import CameraCalibration as CC
 import SizeEstimations as SE
 import cv2 as cv
 import pickle
-import numpy as np
+
 
 ###################################### Measurements
 ##################### Camera Calibration Method
