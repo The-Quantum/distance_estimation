@@ -15,7 +15,7 @@ import numpy as np
 
 ######## Calibrate Camera test with Post its   
 
-# prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
+# prepare object points in real World and In the image
 
 objPts = np.float32([[0,0,0],[73.6,0,0],[0,117.4,0],[73.6,117.4,0],
                    [26.6,6,0],[8,40,0],[40,29.6,0],[23.8,51,0],[19.5,74.2,0],[37.6,72,0],[1.2,88,0],[19,98.5,0],[7,14.4,0],[10.4,21.6,0], #1- 9

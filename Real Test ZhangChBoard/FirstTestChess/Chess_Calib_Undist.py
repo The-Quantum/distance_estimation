@@ -34,6 +34,9 @@ def calibration_Chess(dirPath, squareSize, width, height):
       
     images = pathlib.Path(dirPath).glob('*.jpg')
 
+    nameOfFile = 'marks0'
+    index=0
+    
 
     for fname in images:
         img = cv.imread(str(fname))
@@ -54,6 +57,15 @@ def calibration_Chess(dirPath, squareSize, width, height):
             # Draw and display the corners
             cv.drawChessboardCorners(img, (width,height), corners2, ret)
         print("image number = ",i)
+        
+        
+        # name = nameOfFile + '.jpg'
+        # cv.imwrite(name,img)
+            
+        index += 1
+        nameOfFile = nameOfFile.replace(nameOfFile[5],str(index))
+        
+        
         cv.imshow('img', img)
         cv.waitKey(0)
         i+=1

@@ -5,8 +5,7 @@ Created on Fri May  3 14:04:28 2024
 @author: jpila
 """
 
-import Chess_CalibUndist as Zhang
-import Estimates as Est
+import Chess_Calib_Undist as Zhang
 import numpy as np
 import cv2 as cv
 
@@ -29,7 +28,7 @@ ret, TransformMtx, distCoef, rVecs, tVecs = Zhang.calibration_Chess(
 imgTest = cv.imread('Screenshot6.jpg')
 #imgTest = cv.resize(imgTest)
       
-undst = Zhang.UndistortImage(imgTest, TransformMtx, distCoef)
+undst = Zhang.UndistorAllImages(dirPath, TransformMtx, distCoef)
 
 scale_percent = 50 # percent of original size
 newWidth = int(imgTest.shape[1] * scale_percent / 100)
