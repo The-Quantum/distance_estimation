@@ -5,11 +5,11 @@ Created on Fri May  3 15:10:54 2024
 @author: jpila
 """
 
-import CameraCalibration as CC
-import SizeEstimations as SE
+#import CameraCalibration as CC
+#import SizeEstimations as SE
 import cv2 as cv
 import numpy as np
-from findHomgraphyLines import dlt_with_lines
+#from findHomgraphyLines import dlt_with_lines
 
 # objL = np.float32([#[-2.42, 1.0, -51.98],[-1.7134, 1.0, 0.0],[0.87, 1.0, -89.141],[1.96, 1.0, -97.984],
 #                    [0,-1,0], [1,0,0], [1,0,-73.6], [0,1,-117.4]
@@ -215,6 +215,11 @@ print('H shape', HPrime.shape)
 #Denormalization
 T1Objt = np.transpose(T1Obj)
 T2Objt = np.transpose(T2Obj)
+T1ObjtInv = np.linalg.inv(T1Objt)
+T2ObjtInv = np.linalg.inv(T2Objt)
+
+T1Imgt = np.transpose(T1Img)
+T2Imgt = np.transpose(T2Img)
 
 T1ImgInv = np.linalg.inv(T1Img)
 T2ImgInv = np.linalg.inv(T2Img)
@@ -226,10 +231,11 @@ T2ImgInvt = np.transpose(T2ImgInv)
 #H = np.dot(H,T1ImgInvt)
 #H = np.dot(H,T2ImgInvt)
 #H = T2Objt @ T1Objt @ H @ T2ImgInvt @ T1ImgInvt
-H = (T2Objt @ T1Objt) @ HPrime @ (T1ImgInvt @ T2ImgInvt)
+#H = (T2Objt @ T1Objt) @ HPrime @ (T1ImgInvt @ T2ImgInvt)
 #H = T2ImgInvt @ T1ImgInvt @ HPrime @ T1Objt @ T2Objt 
+H = T2Imgt @ T1Imgt @ HPrime @ T1ObjtInv @ T2ObjtInv 
 
-H_dlt = dlt_with_lines(objL, imgL)
+#H_dlt = dlt_with_lines(objL, imgL)
 #H = np.linalg.inv(H)
 #Hinv = np.transpose(H_dlt)
 
