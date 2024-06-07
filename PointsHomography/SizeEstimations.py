@@ -24,6 +24,12 @@ class SizeEstimations:
         
     #Methods
     def homographyTransform(self,imgCaseStudy,tMtx):
+        """
+        Input :
+        -------
+         - imgCaseStudy : Image to transform or warp
+         - tMtx : Transform matrix
+        """
         
         #Trasform the image
         imgTransform = cv.warpPerspective(imgCaseStudy,
@@ -41,6 +47,8 @@ class SizeEstimations:
     
     
     def transformCoordSyst(self,objP,tMtx):
+        """ Transform the coordinate system
+        """
         
         #create new dimentions
         add3D = np.zeros(shape=(objP.shape[0], 1))

@@ -1,3 +1,11 @@
 camera_login_parameters.json
 __pycache__
 camera_id_and_passeword.json
+./*.jpg
+/LinesHomography/*.jpg
+/PointsHomography/images/*.jpg
+/HomographyAutomation/*.jpg
+
+/home/besttic-rd/Documents/besttic/distance_estimation/LinesHomography/*.jpg
+/home/besttic-rd/Documents/besttic/distance_estimation/ZhangChBoardMethod/*.jpg
+/home/besttic-rd/Documents/besttic/distance_estimation/HomographyAutomation/*.jpg
